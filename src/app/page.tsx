@@ -1,6 +1,6 @@
 import { profile } from "@/data/profile";
 import ProfileHeader from "@/components/ProfileHeader";
-import LinkCard from "@/components/LinkCard";
+import LinkList from "@/components/LinkList";
 
 // 와이어프레임(wireframe.png) 레이아웃
 // ┌──────────────┐
@@ -20,13 +20,7 @@ export default function Home() {
         avatar={profile.avatar}
       />
 
-      <ul className="mt-12 flex w-full flex-col gap-3.5 sm:gap-4">
-        {profile.links.map((link) => (
-          <li key={link.id}>
-            <LinkCard link={link} />
-          </li>
-        ))}
-      </ul>
+      <LinkList links={profile.links} />
 
       <footer className="mt-auto pt-16 text-xs tracking-wide text-muted/70">
         🌳 링크나무
