@@ -7,6 +7,8 @@ export type LinkItem = {
   id: string;
   title: string;
   url: string;
+  /** 카드 왼쪽 아이콘 자리에 보여 줄 이모지 (없으면 제목 첫 글자) */
+  emoji?: string;
   /** 카드에 함께 보여 줄 짧은 설명 (선택) */
   description?: string;
 };
@@ -21,23 +23,26 @@ export type Profile = {
 
 export const profile: Profile = {
   name: "서원재",
-  bio: "축구 유니폼 콜렉터",
-  avatar: "/avatar.svg",
+  bio: "축구 유니폼 콜렉터 : 레플리카보단 어센틱을 좋아해요",
+  avatar: "/profile.jpg",
   links: [
     {
       id: "github",
       title: "GitHub",
-      url: "https://github.com/",
+      url: "https://github.com/wonjae36",
+      emoji: "🐙",
     },
     {
       id: "linkedin",
       title: "LinkedIn",
       url: "https://www.linkedin.com/",
+      emoji: "👨‍💼",
     },
     {
       id: "blog",
       title: "Blog",
-      url: "https://velog.io/",
+      url: "https://blog.naver.com/doodlingz",
+      emoji: "✍️",
     },
   ],
 };

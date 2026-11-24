@@ -1,25 +1,73 @@
 @import "tailwindcss";
 
+/* 연한 하늘색 그라데이션 팔레트 (위: 아주 옅은 하늘 → 아래: 연한 하늘) */
 :root {
-  --background: #f4f7f5;
-  --foreground: #18181b;
+  --background: #f3f9fe;
+  --foreground: #1f2a37;
+  --muted: #64748b;
+
+  --bg-from: #f3f9fe; /* 아주 옅은 하늘 */
+  --bg-to: #cfe6fa; /* 연한 하늘 */
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-noto-sans-kr), system-ui, sans-serif;
+  --color-muted: var(--muted);
+  --font-sans: var(--font-pretendard), "Pretendard", system-ui, sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0b1424;
+    --foreground: #e6eef8;
+    --muted: #94a3b8;
+
+    --bg-from: #0b1424; /* 짙은 남색 */
+    --bg-to: #12223d; /* 조금 밝은 남색 */
   }
 }
 
 body {
+  position: relative;
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+  letter-spacing: -0.01em;
+}
+
+/* 화면에 고정된 그라데이션 배경.
+   background-attachment: fixed는 iOS Safari에서 깨지므로 고정 레이어로 깝니다.
+   - 위→아래 한 방향 그라데이션 하나만 사용 (원형 빛번짐을 겹치면 얼룩져 보임)
+   - 중간 색을 부드러운 곡선(ease-in-out) 간격으로 넣어 시작·끝 경계가 티 나지 않게 함
+   - oklab 색 공간으로 섞어 중간색이 탁해지지 않게 함 */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(180deg, var(--bg-from), var(--bg-to)); /* 구형 브라우저용 */
+  background: linear-gradient(
+    180deg,
+    var(--bg-from) 0%,
+    color-mix(in oklab, var(--bg-from) 95%, var(--bg-to)) 15%,
+    color-mix(in oklab, var(--bg-from) 81%, var(--bg-to)) 30%,
+    color-mix(in oklab, var(--bg-from) 50%, var(--bg-to)) 50%,
+    color-mix(in oklab, var(--bg-from) 19%, var(--bg-to)) 70%,
+    color-mix(in oklab, var(--bg-from) 5%, var(--bg-to)) 85%,
+    var(--bg-to) 100%
+  );
+}
+
+/* 아주 옅은 노이즈를 덮어 그라데이션의 계단 줄무늬(밴딩)를 흩어 줍니다.
+   눈에는 거의 보이지 않을 정도의 투명도입니다. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }

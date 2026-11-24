@@ -13,14 +13,14 @@ import LinkCard from "@/components/LinkCard";
 // └──────────────┘
 export default function Home() {
   return (
-    <main className="mx-auto flex w-full max-w-md flex-1 flex-col items-center px-4 py-14 sm:py-20">
+    <main className="mx-auto flex w-full max-w-md flex-1 flex-col items-center px-6 pt-16 pb-10 sm:px-8 sm:pt-24">
       <ProfileHeader
         name={profile.name}
         bio={profile.bio}
         avatar={profile.avatar}
       />
 
-      <ul className="mt-12 flex w-full flex-col gap-4">
+      <ul className="mt-12 flex w-full flex-col gap-3.5 sm:gap-4">
         {profile.links.map((link) => (
           <li key={link.id}>
             <LinkCard link={link} />
@@ -28,7 +28,7 @@ export default function Home() {
         ))}
       </ul>
 
-      <footer className="mt-auto pt-12 text-xs text-zinc-400">
+      <footer className="mt-auto pt-16 text-xs tracking-wide text-muted/70">
         🌳 링크나무
       </footer>
     </main>
